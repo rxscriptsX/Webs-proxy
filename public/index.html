@@ -469,31 +469,31 @@
       console.warn('Service Worker no soportado');
       return;
     }
-    // Si ya estamos dentro del scope del SW, no hacer nada
-    if (window.location.pathname.startsWith(__uv$config.prefix)) {
-      console.log('Ya dentro del scope del SW');
-      return;
-    }
     try {
       const swPath = __uv$config.sw;
       const reg = await navigator.serviceWorker.register(swPath, {
         scope: __uv$config.prefix,
       });
-      console.log('SW registrado, scope:', reg.scope);
-      // Esperar a que esté listo y luego redirigir si no controla
+      console.log('✅ SW registrado, scope:', reg.scope);
+      // Esperar a que esté listo
       await navigator.serviceWorker.ready;
-      if (!navigator.serviceWorker.controller) {
-        console.log('Redirigiendo a /uv/service/index');
+
+      // Si NO estamos bajo el scope, redirigimos para activarlo
+      if (!window.location.pathname.startsWith(__uv$config.prefix)) {
+        console.log('🔄 Redirigiendo a /uv/service/index para activar el SW...');
         window.location.replace('/uv/service/index');
+      } else {
+        console.log('⚡ Página bajo control del SW');
       }
     } catch (e) {
-      console.error('Error al registrar SW:', e);
+      console.error('❌ Error al registrar SW:', e);
     }
   }
 
   async function go() {
     const input = document.getElementById('url').value.trim();
     if (!input) return;
+
     let url = input;
     if (!/^https?:\/\//i.test(url)) {
       if (/^[\w-]+(\.\w+)+/.test(url)) {
@@ -502,7 +502,9 @@
         url = 'https://www.google.com/search?q=' + encodeURIComponent(url);
       }
     }
+
     document.getElementById('loading').classList.add('active');
+    // La navegación será interceptada por el SW
     location.assign(__uv$config.prefix + __uv$config.encodeUrl(url));
   }
 
