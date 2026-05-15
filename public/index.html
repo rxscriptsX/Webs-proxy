@@ -20,18 +20,18 @@
         }
     </script>
 
-    <!-- Estilos originales (mantenidos) -->
+    <!-- Tus estilos originales (se mantienen) -->
     <link rel="stylesheet" href="example.css">
 
-    <!-- Diseño adicional (solo visual, no toca nada funcional) -->
+    <!-- Diseño añadido (solo visual, no toca nada funcional) -->
     <style>
         :root {
             --cyan: #00f5ff;
-            --pink: #ff2d6b;
             --purple: #7b2dff;
             --bg: #020810;
             --surface: #060e1a;
             --border: rgba(0,245,255,0.15);
+            --text: #c0d8e8;
         }
 
         * {
@@ -42,115 +42,33 @@
 
         body {
             background: var(--bg);
-            color: #c0d8e8;
+            color: var(--text);
             font-family: 'Share Tech Mono', monospace;
             min-height: 100vh;
-            overflow-x: hidden;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            position: relative;
+            padding: 1rem;
         }
 
-        /* Fondo animado (grid + scanlines) */
-        body::before {
-            content: '';
-            position: fixed;
-            inset: 0;
-            background-image:
-                linear-gradient(rgba(0,245,255,0.04) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0,245,255,0.04) 1px, transparent 1px);
-            background-size: 50px 50px;
-            animation: gridMove 8s linear infinite;
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        body::after {
-            content: '';
-            position: fixed;
-            inset: 0;
-            background: repeating-linear-gradient(
-                0deg, transparent, transparent 2px,
-                rgba(0,0,0,0.04) 2px, rgba(0,0,0,0.04) 4px
-            );
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        @keyframes gridMove {
-            0% { background-position: 0 0; }
-            100% { background-position: 50px 50px; }
-        }
-
-        /* Orbes de luz decorativos */
-        .orb {
-            position: fixed;
-            border-radius: 50%;
-            filter: blur(80px);
-            opacity: 0.12;
-            pointer-events: none;
-            z-index: 0;
-            animation: orbFloat 10s ease-in-out infinite;
-        }
-        .orb1 { width: 500px; height: 500px; background: var(--cyan); top: -150px; left: -150px; }
-        .orb2 { width: 400px; height: 400px; background: var(--purple); bottom: -100px; right: -100px; animation-delay: -4s; }
-        .orb3 { width: 300px; height: 300px; background: var(--pink); top: 50%; left: 50%; transform: translate(-50%,-50%); animation-delay: -7s; opacity: 0.07; }
-
-        @keyframes orbFloat {
-            0%, 100% { transform: scale(1) translate(0,0); }
-            33%      { transform: scale(1.1) translate(20px, -20px); }
-            66%      { transform: scale(0.95) translate(-15px, 15px); }
-        }
-
-        /* Capa principal encima del fondo */
-        .main-container {
-            position: relative;
-            z-index: 1;
+        /* Contenedor principal */
+        .main-box {
             width: 100%;
-            max-width: 800px;
-            padding: 2rem;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 1.5rem;
-        }
-
-        /* Tarjeta de búsqueda */
-        .search-card {
+            max-width: 900px;
             background: rgba(6,14,26,0.85);
-            backdrop-filter: blur(20px);
+            backdrop-filter: blur(15px);
             border: 1px solid var(--border);
-            border-radius: 6px;
-            padding: 2rem 2rem 1.5rem;
-            width: 100%;
-            box-shadow:
-                0 0 0 1px rgba(0,245,255,0.04),
-                0 0 80px rgba(0,245,255,0.06),
-                inset 0 1px 0 rgba(0,245,255,0.08);
-            position: relative;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 0 30px rgba(0,245,255,0.05), inset 0 1px 0 rgba(0,245,255,0.1);
         }
 
-        /* Línea decorativa superior */
-        .search-card::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 10%; right: 10%;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, var(--cyan), transparent);
-            animation: scanLine 3s ease-in-out infinite;
-        }
-
-        @keyframes scanLine {
-            0%, 100% { opacity: 0.3; left: 10%; right: 10%; }
-            50%      { opacity: 1; left: 5%; right: 5%; }
-        }
-
-        .input-group {
+        /* Grupo de entrada y botón */
+        .search-group {
             display: flex;
             gap: 0;
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
         }
 
         #urlInput {
@@ -158,59 +76,58 @@
             background: rgba(0,245,255,0.04);
             border: 1px solid rgba(0,245,255,0.2);
             border-right: none;
-            border-radius: 3px 0 0 3px;
+            border-radius: 6px 0 0 6px;
             color: var(--cyan);
-            font-family: 'Share Tech Mono', monospace;
+            font-family: inherit;
             font-size: 1rem;
             padding: 1rem 1.2rem;
             outline: none;
             transition: all 0.3s;
-            caret-color: var(--cyan);
-        }
-
-        #urlInput::placeholder {
-            color: rgba(0,245,255,0.2);
         }
 
         #urlInput:focus {
-            border-color: rgba(0,245,255,0.6);
-            background: rgba(0,245,255,0.07);
-            box-shadow: 0 0 30px rgba(0,245,255,0.15), inset 0 0 20px rgba(0,245,255,0.03);
+            border-color: var(--cyan);
+            background: rgba(0,245,255,0.08);
+            box-shadow: 0 0 20px rgba(0,245,255,0.1);
+        }
+
+        #urlInput::placeholder {
+            color: rgba(0,245,255,0.25);
         }
 
         #searchButton {
             background: linear-gradient(135deg, var(--cyan), var(--purple));
             border: none;
-            border-radius: 0 3px 3px 0;
+            border-radius: 0 6px 6px 0;
             color: #000;
             font-family: 'Orbitron', sans-serif;
-            font-size: 0.65rem;
             font-weight: 700;
-            letter-spacing: 0.15em;
-            padding: 1rem 1.8rem;
+            font-size: 0.75rem;
+            letter-spacing: 0.1em;
+            padding: 1rem 2rem;
             cursor: pointer;
             text-transform: uppercase;
             transition: all 0.2s;
-            position: relative;
-            overflow: hidden;
+            white-space: nowrap;
         }
 
         #searchButton:hover {
             filter: brightness(1.2);
-            box-shadow: 0 0 25px rgba(0,245,255,0.5);
+            box-shadow: 0 0 20px rgba(0,245,255,0.4);
         }
 
         #searchButton:active {
             transform: scale(0.97);
         }
 
-        /* Etiqueta de estado */
-        .status-text {
-            font-size: 0.65rem;
-            color: rgba(0,245,255,0.3);
+        /* Estado del proxy */
+        .status {
+            font-size: 0.7rem;
+            color: rgba(0,245,255,0.4);
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 0.4rem;
+            margin-bottom: 1.5rem;
         }
 
         .dot {
@@ -218,60 +135,61 @@
             height: 6px;
             border-radius: 50%;
             background: #00ff88;
-            box-shadow: 0 0 8px #00ff88;
+            box-shadow: 0 0 6px #00ff88;
             animation: blink 2s infinite;
         }
 
         @keyframes blink {
             0%, 100% { opacity: 1; }
-            50%      { opacity: 0.3; }
+            50% { opacity: 0.3; }
         }
 
-        /* Área del iframe */
-        .iframe-container {
-            width: 100%;
-            background: rgba(6,14,26,0.85);
-            backdrop-filter: blur(20px);
+        /* Contenedor del iframe */
+        .iframe-wrapper {
             border: 1px solid var(--border);
-            border-radius: 6px;
+            border-radius: 8px;
             overflow: hidden;
-            box-shadow:
-                0 0 0 1px rgba(0,245,255,0.04),
-                0 0 80px rgba(0,245,255,0.06);
-            margin-top: 0.5rem;
+            background: #000;
+            box-shadow: 0 0 30px rgba(0,0,0,0.5);
         }
 
         #iframeWindow {
             width: 100%;
-            height: 70vh;
+            height: 65vh;
             border: none;
-            background: #000;
             display: block;
+        }
+
+        /* Pequeño footer */
+        .footer {
+            text-align: center;
+            margin-top: 1.5rem;
+            font-size: 0.6rem;
+            letter-spacing: 0.2em;
+            color: rgba(0,245,255,0.2);
         }
     </style>
 </head>
 <body>
 
-    <!-- Orbes decorativos -->
-    <div class="orb orb1"></div>
-    <div class="orb orb2"></div>
-    <div class="orb orb3"></div>
-
-    <!-- Contenido principal (misma estructura funcional) -->
-    <div class="main-container">
-        <div class="search-card">
-            <div class="input-group">
-                <input type="text" id="urlInput" placeholder="Enter URL here">
-                <button id="searchButton">Search Text</button>
-            </div>
-            <div class="status-text">
-                <span class="dot"></span>
-                PROXY ACTIVO · ULTRAVIOLET · ENCRIPTADO
-            </div>
+    <!-- Todo el contenido funcional permanece idéntico -->
+    <div class="main-box">
+        <div class="search-group">
+            <input type="text" id="urlInput" placeholder="Enter URL here">
+            <button id="searchButton">Search Text</button>
         </div>
 
-        <div class="iframe-container">
+        <div class="status">
+            <span class="dot"></span>
+            PROXY ACTIVO · ULTRAVIOLET · ENCRIPTADO
+        </div>
+
+        <div class="iframe-wrapper">
             <iframe id="iframeWindow" class="iframeWindow"></iframe>
+        </div>
+
+        <div class="footer">
+            WAEVO PROXY &copy; 2025
         </div>
     </div>
 
