@@ -48,41 +48,28 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
-            padding: 1rem;
+            justify-content: flex-start;  /* Alinea el contenido hacia arriba para luego empujar el input hacia abajo */
+            padding: 2rem 1rem;
         }
 
-        /* Contenedor principal */
-        .main-box {
-            width: 100%;
-            max-width: 900px;
-            background: rgba(6,14,26,0.85);
-            backdrop-filter: blur(15px);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 2rem;
-            box-shadow: 0 0 30px rgba(0,245,255,0.05), inset 0 1px 0 rgba(0,245,255,0.1);
-        }
-
-        /* Grupo de entrada y botón */
-        .search-group {
-            display: flex;
-            gap: 0;
-            margin-bottom: 1.5rem;
-        }
-
+        /* Empuja la barra de búsqueda más abajo */
         #urlInput {
-            flex: 1;
+            margin-top: 8vh;  /* La baja un poco sin pasarse */
+            display: block;
+            width: 100%;
+            max-width: 600px;
             background: rgba(0,245,255,0.04);
             border: 1px solid rgba(0,245,255,0.2);
-            border-right: none;
-            border-radius: 6px 0 0 6px;
+            border-radius: 6px;
             color: var(--cyan);
             font-family: inherit;
             font-size: 1rem;
             padding: 1rem 1.2rem;
             outline: none;
             transition: all 0.3s;
+            caret-color: var(--cyan);
+            margin-left: auto;
+            margin-right: auto;
         }
 
         #urlInput:focus {
@@ -95,16 +82,19 @@
             color: rgba(0,245,255,0.25);
         }
 
+        /* Botón justo debajo de la barra */
         #searchButton {
+            display: block;
+            margin: 1rem auto 0 auto;  /* Justo debajo, centrado */
             background: linear-gradient(135deg, var(--cyan), var(--purple));
             border: none;
-            border-radius: 0 6px 6px 0;
+            border-radius: 6px;
             color: #000;
             font-family: 'Orbitron', sans-serif;
             font-weight: 700;
             font-size: 0.75rem;
             letter-spacing: 0.1em;
-            padding: 1rem 2rem;
+            padding: 0.9rem 2rem;
             cursor: pointer;
             text-transform: uppercase;
             transition: all 0.2s;
@@ -120,14 +110,15 @@
             transform: scale(0.97);
         }
 
-        /* Estado del proxy */
+        /* Línea de estado debajo del botón (opcional pero bonito) */
         .status {
-            font-size: 0.7rem;
-            color: rgba(0,245,255,0.4);
             display: flex;
             align-items: center;
+            justify-content: center;
             gap: 0.4rem;
-            margin-bottom: 1.5rem;
+            margin-top: 1.5rem;
+            font-size: 0.65rem;
+            color: rgba(0,245,255,0.4);
         }
 
         .dot {
@@ -145,7 +136,10 @@
         }
 
         /* Contenedor del iframe */
-        .iframe-wrapper {
+        .iframe-container {
+            width: 100%;
+            max-width: 1000px;
+            margin-top: 2rem;
             border: 1px solid var(--border);
             border-radius: 8px;
             overflow: hidden;
@@ -162,35 +156,33 @@
 
         /* Pequeño footer */
         .footer {
-            text-align: center;
             margin-top: 1.5rem;
             font-size: 0.6rem;
             letter-spacing: 0.2em;
             color: rgba(0,245,255,0.2);
+            text-align: center;
         }
     </style>
 </head>
 <body>
 
-    <!-- Todo el contenido funcional permanece idéntico -->
-    <div class="main-box">
-        <div class="search-group">
-            <input type="text" id="urlInput" placeholder="Enter URL here">
-            <button id="searchButton">Search Text</button>
-        </div>
+    <!-- Elementos originales (intocados en orden y tipo) -->
+    <input type="text" id="urlInput" placeholder="Enter URL here">
+    <button id="searchButton">Search Text</button>
 
-        <div class="status">
-            <span class="dot"></span>
-            PROXY ACTIVO · ULTRAVIOLET · ENCRIPTADO
-        </div>
+    <!-- Pequeño indicador de estado (opcional, sin afectar funcionalidad) -->
+    <div class="status">
+        <span class="dot"></span>
+        PROXY ACTIVO · ULTRAVIOLET · ENCRIPTADO
+    </div>
 
-        <div class="iframe-wrapper">
-            <iframe id="iframeWindow" class="iframeWindow"></iframe>
-        </div>
+    <!-- Iframe envuelto para darle estilo -->
+    <div class="iframe-container">
+        <iframe id="iframeWindow" class="iframeWindow"></iframe>
+    </div>
 
-        <div class="footer">
-            WAEVO PROXY &copy; 2025
-        </div>
+    <div class="footer">
+        WAEVO PROXY &copy; 2025
     </div>
 
     <!-- Script funcional original (intocado) -->
